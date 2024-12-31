@@ -119,10 +119,10 @@ function App() {
 
   return (
     <>
-      <h1>スネークゲーム</h1>
+      <h1 className="title">スネークゲーム</h1>
       <p>蛇を動かして、お餅をたくさん食べよう！</p>
       <div>
-        <h2>操作説明</h2>
+        <h2 className="subtitle">操作説明</h2>
         <p>キーボードの左右キーで操作します。<br />左右スワイプでも操作できます。</p>
       </div>
       {!gameStarted ? (

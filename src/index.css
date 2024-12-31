@@ -12,8 +12,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-h1 {
+
+.title{
   margin: 0;
+  font-size: 1.7rem;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1.4rem;
 }
 
 a {
