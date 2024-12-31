@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 const BOARD_SIZE = 10;
@@ -11,6 +11,7 @@ function App() {
   const [food, setFood] = useState({ x: 5, y: 5 });
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [turn, setTurn] = useState(false);
 
   const startGame = () => {
     setGameStarted(true);
@@ -23,6 +24,7 @@ function App() {
   const moveSnake = useCallback(() => {
     if (!gameStarted) return;
     setSnake(prevSnake => {
+      setTurn(false);
       const newHead = {
         x: prevSnake[0].x + direction.x,
         y: prevSnake[0].y + direction.y,
@@ -50,15 +52,23 @@ function App() {
 
       return newSnake;
     });
-  }, [direction, food, gameStarted]);
+  }, [direction, food, gameStarted, turn]);
 
   const changeDirection = (e: KeyboardEvent) => {
     setDirection(prevDirection => {
       switch (e.key) {
         case 'ArrowLeft':
-          return { x: -prevDirection.y, y: prevDirection.x };
+          if (!turn) {
+            setTurn(true);
+            return { x: -prevDirection.y, y: prevDirection.x };
+          }
+          return { x: prevDirection.x, y: prevDirection.y }
         case 'ArrowRight':
-          return { x: prevDirection.y, y: -prevDirection.x };
+          if (!turn) {
+            setTurn(true);
+            return { x: prevDirection.y, y: -prevDirection.x };
+          }
+          return { x: prevDirection.x, y: prevDirection.y }
         default:
           return prevDirection;
       }
@@ -119,10 +129,10 @@ function App() {
 
   return (
     <>
-      <h1 className="title">スネークゲーム</h1>
+      <h1>スネークゲーム</h1>
       <p>蛇を動かして、お餅をたくさん食べよう！</p>
       <div>
-        <h2 className="subtitle">操作説明</h2>
+        <h2>操作説明</h2>
         <p>キーボードの左右キーで操作します。<br />左右スワイプでも操作できます。</p>
       </div>
       {!gameStarted ? (
