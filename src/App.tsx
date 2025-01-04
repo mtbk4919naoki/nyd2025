@@ -105,25 +105,13 @@ function App() {
       // Horizontal swipe
       if (diffX > 0) {
         // Swipe right
-        if (turn !== 'ahead') {
-          setDirectionQueue('right');
-        }
-        if (turn !== 'right') {
-          setTurn('right');
-          setDirection({ x: direction.y, y: -direction.x });
-        }
+        setDirection({ x: direction.y, y: -direction.x });
       } else {
         // Swipe left
-        if (turn !== 'ahead') {
-          setDirectionQueue('left');
-        }
-        if (turn !== 'left') {
-          setTurn('left');
-          setDirection({ x: -direction.y, y: direction.x });
-        }
+        setDirection({ x: -direction.y, y: direction.x });
       }
     }
-  }, [direction, turn, directionQueue]);
+  }, [direction]);
 
   useEffect(() => {
     let startX: number;
